@@ -1,0 +1,44 @@
+image: python:latest
+
+services:
+    - rabbitmq:latest
+    - postgres:latest
+    - mongo:latest
+
+variables:
+    GIT_SUBMODULE_STRATEGY: recursive
+    PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+    PIPENV_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pipenv"
+    PIPENV_VENV_IN_PROJECT: 1
+    RABBITMQ_DEFAULT_USER: guest
+    RABBITMQ_DEFAULT_PASS: password
+    AMQP_URL: 'amqp://guest:password@rabbitmq:5672'
+    POSTGRES_DB: reddit
+    POSTGRES_USER: guest
+    POSTGRES_PASSWORD: password
+
+cache:
+    paths:
+        - .cache/pip
+        - .cache/pipenv
+        - .venv
+
+before_script:
+    # begin setting up ssh key
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client git -y )'
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    # note that this is set CFRL-wide
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+    # end setting up ssh key
+    - pip3 install pipenv
+    - pipenv install
+
+run-test:
+    script:
+        - python3 --version
+        - pipenv --version
+        - curl https://www.google.com
