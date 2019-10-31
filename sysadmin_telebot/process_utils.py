@@ -5,7 +5,7 @@ import time
 import traceback
 
 
-__all__ = ["get_command_out"]
+__all__ = ["get_command_out", "every"]
 
 
 def call_command(*args, **kwargs):
