@@ -13,6 +13,9 @@ from telegram.ext import (
 )
 
 
+__all__ = []
+
+
 def load_token(token_name):
     here = os.path.abspath(os.path.dirname(__file__))
     with open(os.path.join(here, token_name)) as f:
