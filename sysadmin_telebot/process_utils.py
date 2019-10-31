@@ -15,3 +15,11 @@ def execute_command(*args, **kwargs):
         args, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE
     )
     return proc.communicate()
+
+
+def clean_output(stdout, stderr, handler=None):
+    if stderr:
+        if handler is not None:
+            pass  # TODO
+        return None
+    return stdout.decode("UTF-8")
