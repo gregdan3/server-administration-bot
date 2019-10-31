@@ -5,6 +5,9 @@ import time
 import traceback
 
 
+__all__ = ["get_command_out"]
+
+
 def call_command(*args, **kwargs):
     print(args, kwargs)
     return subprocess.call(*args)
