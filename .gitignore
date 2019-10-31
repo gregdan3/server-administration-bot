@@ -24,3 +24,4 @@ local*
 local/**
 error*
 *token*
+*.egg-info
