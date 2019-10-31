@@ -10,6 +10,11 @@ def call_command(*args, **kwargs):
     return subprocess.call(*args)
 
 
+def get_command_out(*args, **kwargs):
+    stdout, stderr = execute_command(*args, **kwargs)
+    return clean_output(stdout, stderr)
+
+
 def execute_command(*args, **kwargs):
     proc = subprocess.Popen(
         args, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE
