@@ -16,7 +16,7 @@ TEST_REQUIREMENTS = ["pytest>=2.8.0"]
 # Load the package's __version__.py module as a dictionary.
 about = {}
 with open(
-    os.path.join(here, "module_name", "__version__.py"), "r", encoding="utf-8"
+    os.path.join(here, "sysadmin_telebot", "__version__.py"), "r", encoding="utf-8"
 ) as f:
     exec(f.read(), about)
 
