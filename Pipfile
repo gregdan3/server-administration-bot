@@ -7,6 +7,8 @@ verify_ssl = true
 
 [packages]
 python-telegram-bot = "*"
+e1839a8 = {editable = true,path = "."}
+server-telegram-bot = {path = "."}
 
 [requires]
 python_version = "3.7"
