@@ -27,3 +27,17 @@ def hello(update, context):
 def send(bot, message, chat_id):
     print(bot, message, chat_id)
     bot.sendMessage(chat_id=chat_id, text=message)
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument(
+        "-t",
+        "--token",
+        type=str,
+        default="token.txt",
+        help="The name of the file containing your bot's token.",
+    )
+
+    argv = parser.parse_args()
