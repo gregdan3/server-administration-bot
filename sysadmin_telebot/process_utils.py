@@ -33,6 +33,18 @@ def clean_output(stdout, stderr, handler=None):
     return stdout.decode("UTF-8")
 
 
+def every(delay, task, *args, **kwargs):
+    next_time = time.time() + delay
+    while True:
+        time.sleep(max(0, next_time - time.time()))
+        try:
+            task(*args, **kwargs)
+        except Exception:
+            traceback.print_exc()
+        # skip tasks if we are behind schedule:
+        next_time += (time.time() - next_time) // delay * delay + delay
+
+
 def main():
     result = get_command_out("uname -r")
     print(result)
