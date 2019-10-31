@@ -13,6 +13,13 @@ from telegram.ext import (
 )
 
 
+def load_token(token_name):
+    here = os.path.abspath(os.path.dirname(__file__))
+    with open(os.path.join(here, token_name)) as f:
+        token = f.readline().strip()
+    return token
+
+
 def hello(update, context):
     update.message.reply_text("Hello {}".format(update.message.from_user.first_name))
 
