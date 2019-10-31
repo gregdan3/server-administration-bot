@@ -29,6 +29,19 @@ def send(bot, message, chat_id):
     bot.sendMessage(chat_id=chat_id, text=message)
 
 
+def main(argv):
+    token = load_token(argv.token)
+    updater = Updater(token, use_context=True)
+
+    bot = Bot(token)
+
+    updater.dispatcher.add_handler(CommandHandler("hello", hello))
+
+    updater.start_polling()
+
+    updater.idle()
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
@@ -41,3 +54,4 @@ if __name__ == "__main__":
     )
 
     argv = parser.parse_args()
+    main(argv)
