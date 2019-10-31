@@ -28,3 +28,12 @@ def clean_output(stdout, stderr, handler=None):
             pass  # TODO
         return None
     return stdout.decode("UTF-8")
+
+
+def main():
+    result = get_command_out("uname -r")
+    print(result)
+
+
+if __name__ == "__main__":
+    main()
