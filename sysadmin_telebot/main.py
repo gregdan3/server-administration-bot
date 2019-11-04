@@ -13,15 +13,9 @@ from telegram.ext import (
 )
 
 from sysadmin_telebot.process_utils import get_command_out, every
+from sysadmin_telebot.file_utils import load_token, load_yml_file
 
 __all__ = []
-
-
-def load_token(token_name):
-    here = os.path.abspath(os.path.dirname(__file__))
-    with open(os.path.join(here, token_name)) as f:
-        token = f.readline().strip()
-    return token
 
 
 def hello(update, context):
