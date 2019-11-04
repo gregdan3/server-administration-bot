@@ -1,0 +1,12 @@
+init:                               # init command is special, executed once at program start. Optional
+    execute: "hostname --long"      # any string command
+    prefix: ""                      # attach string to beginning of message, before command
+    postfix: ""                     # attach string to end of message, after command
+    sendto: ""                      # user or chat bot is in, by id
+
+command:                            # name of command
+    every: 5                        # time in seconds
+    execute: "command arg --opt"    # any string command
+    prefix: "Example start: "       # attach string to beginning of message, before command
+    postfix: ". Finish command"     # attach string to end of message, after command
+    sendto: "12345"                 # user or chat bot is in, by id. int or str
