@@ -2,14 +2,14 @@
 import multiprocessing
 import subprocess
 import time
+import threading
 import traceback
 
 
-__all__ = ["get_command_out", "every"]
+__all__ = ["get_command_out", "every", "repeat_in_thread"]
 
 
 def call_command(*args, **kwargs):
-    print(args, kwargs)
     return subprocess.call(*args)
 
 
@@ -43,6 +43,11 @@ def every(delay, task, *args, **kwargs):
             traceback.print_exc()
         # skip tasks if we are behind schedule:
         next_time += (time.time() - next_time) // delay * delay + delay
+
+
+def repeat_in_thread(seconds, command, *args, **kwargs):
+    # TODO: max number of threads?
+    threading.Thread(target=lambda: every(seconds, command, *args, **kwargs)).start()
 
 
 def main():
