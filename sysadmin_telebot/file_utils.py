@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 import os
 import yaml
+import __main__
 
 
 __all__ = ["here", "load_token", "load_command"]
 
-here = os.path.abspath(os.path.dirname(__file__))
+here = os.path.abspath(os.path.dirname(__main__.__file__))
 
 
 def load_yml_file(filename):
