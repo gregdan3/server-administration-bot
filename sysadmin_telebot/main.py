@@ -53,6 +53,8 @@ def prep_commands(bot, commands: list):
     for _, command in commands.items():
         reactto = command["reactto"]
         execute = command["execute"]
+        _log.info("Adding command %s that executes %s", reactto, execute)
+        # TODO: what if execute is very long
         bot.dispatcher.add_handler(
             CommandHandler(
                 reactto, partial(bot_command, execute=partial(get_command_out, execute))
@@ -69,9 +71,11 @@ def prep_constants(bot, constants: list):
         sendto = command["sendto"]
 
         if seconds == "":  # init constants to run immediately
+            _log.info("Executing %s, sending to %s", execute, sendto)
             bot_send(bot, prefix, partial(get_command_out, execute), suffix, sendto)
 
         else:  # constants to run regularly
+            _log.info("Executing %s every %s, sending to %s", execute, seconds, sendto)
             repeat_in_thread(
                 seconds,
                 partial(
