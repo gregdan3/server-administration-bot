@@ -76,16 +76,13 @@ def main(argv):
     updater = Updater(token, use_context=True)
     bot = Bot(token)
 
-    commands = load_yml_file(argv.config)
+    all_commands = load_yml_file(argv.config)
 
-    init = commands.pop("init", None)
-    if init is not None and isinstance(init, dict):
-        init_wrapper(bot, init)
+    constants = all_commands["constants"]
+    commands = all_commands["commands"]
 
-    for key, command in commands.items():
-        command_wrapper(bot, command)
-
-    updater.dispatcher.add_handler(CommandHandler("hello", hello))
+    prep_constants(bot, constants)
+    prep_commands(updater, commands)
 
     updater.start_polling()
     updater.idle()
