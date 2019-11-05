@@ -20,13 +20,17 @@ __all__ = []
 
 def bot_command(update, context, execute):
     stdout = execute()
-    message = "```" + stdout + "```"
-    update.message.reply_text(message)
+    if not stdout:
+        return
+    message = "``` " + stdout + " ```"  # TODO
+    update.message.reply_text(message, parse_mode=ParseMode.MARKDOWN)
 
 
 def bot_send(bot, prefix, execute, suffix, sendto):
     stdout = execute()
-    message = prefix + "```" + stdout + "```" + suffix
+    if not stdout:
+        return
+    message = prefix + "``` " + stdout + " ```" + suffix  # TODO
     bot.sendMessage(chat_id=sendto, text=message, parse_mode=ParseMode.MARKDOWN)
 
 
