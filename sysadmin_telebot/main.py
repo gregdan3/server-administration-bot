@@ -12,7 +12,7 @@ from telegram.ext import (
     InlineQueryHandler,
 )
 
-from sysadmin_telebot.process_utils import get_command_out, every
+from sysadmin_telebot.process_utils import get_command_out, every, repeat_in_thread
 from sysadmin_telebot.file_utils import load_token, load_yml_file
 
 __all__ = []
