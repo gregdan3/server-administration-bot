@@ -2,6 +2,7 @@
 import argparse
 from functools import partial
 
+from telegram import ParseMode
 from telegram.bot import Bot
 from telegram.ext import (
     Updater,
