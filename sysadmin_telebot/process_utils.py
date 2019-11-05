@@ -12,11 +12,6 @@ def call_command(*args, **kwargs):
     return subprocess.call(*args)
 
 
-def get_command_out(*args, **kwargs):
-    stdout, stderr = execute_command(*args, **kwargs)
-    return clean_output(stdout, stderr)
-
-
 def execute_command(*args, **kwargs):
     proc = subprocess.Popen(
         args, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE
@@ -32,7 +27,10 @@ def clean_output(stdout, stderr, handler=None):
     return stdout.decode("UTF-8")
 
 
-def every(delay, task, *args, **kwargs):
+def get_command_out(*args, **kwargs):
+    stdout, stderr = execute_command(*args, **kwargs)
+    return clean_output(stdout, stderr)
+
     next_time = time.time() + delay
     while True:
         time.sleep(max(0, next_time - time.time()))
