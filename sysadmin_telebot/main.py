@@ -27,6 +27,12 @@ def send(bot, message, chat_id):
     bot.sendMessage(chat_id=chat_id, text=message)
 
 
+def send_command(bot, prefix, command_func, suffix, chat_id):
+    out = command_func()
+    message = prefix + out + suffix
+    send(bot, message, chat_id)
+
+
 def init_wrapper(bot, command: dict):
     prefix = command.get("prefix", "")
     execute = command["execute"]
