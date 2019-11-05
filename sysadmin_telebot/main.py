@@ -49,14 +49,13 @@ def prep_constants(bot, constants: list):
         sendto = command["sendto"]
 
         if seconds == "":  # init constants to run immediately
-            stdout = get_command_out(execute)
-            bot_send(bot, prefix + stdout + suffix, sendto)
+            bot_send(bot, prefix, partial(get_command_out, execute), suffix, sendto)
 
         else:  # constants to run regularly
             repeat_in_thread(
                 seconds,
                 partial(
-                    send_execution,
+                    bot_send,
                     bot,
                     prefix,
                     partial(get_command_out, execute),
