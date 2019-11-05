@@ -25,10 +25,10 @@ def send(bot, message, chat_id):
     bot.sendMessage(chat_id=chat_id, text=message)
 
 
-def send_command(bot, prefix, command_func, suffix, chat_id):
-    out = command_func()
-    message = prefix + out + suffix
-    send(bot, message, chat_id)
+def send_execution(bot, prefix, execute, suffix, chat_id):
+    stdout = execute()
+    message = prefix + stdout + suffix
+    bot_send(bot, message, chat_id)
 
 
 def prep_commands(bot, commands: list):
