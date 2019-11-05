@@ -31,29 +31,30 @@ def send_command(bot, prefix, command_func, suffix, chat_id):
     send(bot, message, chat_id)
 
 
-def init_wrapper(bot, command: dict):
-    prefix = command.get("prefix", "")
-    execute = command["execute"]
-    suffix = command.get("suffix", "")
-    sendto = command["sendto"]
-    if execute != "":
-        stdout = get_command_out(execute)
-        send(bot, prefix + stdout + suffix, sendto)
+def prep_constants(bot, constants: list):
+    for _, command in constants.items():
+        seconds = command.get("every", "")
+        prefix = command.get("prefix", "")
+        execute = command["execute"]
+        suffix = command.get("suffix", "")
+        sendto = command["sendto"]
 
+        if seconds == "":  # init constants to run immediately
+            stdout = get_command_out(execute)
+            bot_send(bot, prefix + stdout + suffix, sendto)
 
-def command_wrapper(bot, command: dict):
-    seconds = command["every"]
-    prefix = command.get("prefix", "")
-    execute = command["execute"]
-    suffix = command.get("suffix", "")
-    sendto = command["sendto"]
-
-    repeat_in_thread(
-        seconds,
-        partial(
-            send_command, bot, prefix, partial(get_command_out, execute), suffix, sendto
-        ),
-    )
+        else:  # constants to run regularly
+            repeat_in_thread(
+                seconds,
+                partial(
+                    send_execution,
+                    bot,
+                    prefix,
+                    partial(get_command_out, execute),
+                    suffix,
+                    sendto,
+                ),
+            )
 
 
 def main(argv):
