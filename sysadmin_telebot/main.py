@@ -82,6 +82,11 @@ def main(argv):
     constants = all_commands.get("constants", [])
     commands = all_commands.get("commands", [])
 
+    if constants == []:
+        print("WARNING: No constants loaded!")  # TODO: logging
+    if commands == []:
+        print("WARNING: No commands loaded!")  # TODO: logging
+
     prep_constants(bot, constants)
     prep_commands(updater, commands)
 
