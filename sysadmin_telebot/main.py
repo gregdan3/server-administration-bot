@@ -100,6 +100,8 @@ if __name__ == "__main__":
     parser.add_argument(
         "-t",
         "--token",
+        dest="token",
+        metavar="token",
         type=str,
         default="token.txt",
         help="The name of the file containing your bot's token.",
@@ -107,6 +109,8 @@ if __name__ == "__main__":
     parser.add_argument(
         "-c",
         "--config",
+        dest="config",
+        metavar="config",
         type=str,
         default="local_config.yml",
         help="The name of the file containing the commands you want your bot to execute.",
