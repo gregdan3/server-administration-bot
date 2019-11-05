@@ -31,6 +31,17 @@ def send_command(bot, prefix, command_func, suffix, chat_id):
     send(bot, message, chat_id)
 
 
+def prep_commands(bot, commands: list):
+    for _, command in commands.items():
+        reactto = command["reactto"]
+        execute = command["execute"]
+        bot.dispatcher.add_handler(
+            CommandHandler(
+                reactto, partial(bot_command, execute=partial(get_command_out, execute))
+            )
+        )
+
+
 def prep_constants(bot, constants: list):
     for _, command in constants.items():
         seconds = command.get("every", "")
