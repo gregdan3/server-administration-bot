@@ -31,20 +31,22 @@ def get_command_out(*args, **kwargs):
     stdout, stderr = execute_command(*args, **kwargs)
     return clean_output(stdout, stderr)
 
+
+def every(delay, *args, **kwargs):
     next_time = time.time() + delay
     while True:
         time.sleep(max(0, next_time - time.time()))
         try:
-            task(*args, **kwargs)
+            for arg in args:
+                arg(**kwargs)
         except Exception:
             traceback.print_exc()
         # skip tasks if we are behind schedule:
         next_time += (time.time() - next_time) // delay * delay + delay
 
 
-def repeat_in_thread(seconds, command, *args, **kwargs):
-    # TODO: max number of threads?
-    threading.Thread(target=lambda: every(seconds, command, *args, **kwargs)).start()
+def repeat_in_thread(seconds, *args, **kwargs):
+    threading.Thread(target=lambda: every(seconds, *args, **kwargs)).start()
 
 
 def main():
