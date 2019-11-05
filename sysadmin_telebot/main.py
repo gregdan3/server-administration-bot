@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import argparse
 from functools import partial
+import logging
 
 from telegram import ParseMode
 from telegram.bot import Bot
