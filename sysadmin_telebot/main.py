@@ -19,17 +19,14 @@ __all__ = []
 
 def bot_command(update, context, execute):
     stdout = execute()
-    update.message.reply_text(f"{stdout}")
+    message = "```" + stdout + "```"
+    update.message.reply_text(message)
 
 
-def bot_send(bot, message, chat_id):
-    bot.sendMessage(chat_id=chat_id, text=message)
-
-
-def send_execution(bot, prefix, execute, suffix, chat_id):
+def bot_send(bot, prefix, execute, suffix, sendto):
     stdout = execute()
-    message = prefix + stdout + suffix
-    bot_send(bot, message, chat_id)
+    message = prefix + "```" + stdout + "```" + suffix
+    bot.sendMessage(chat_id=sendto, text=message, parse_mode=ParseMode.MARKDOWN)
 
 
 def prep_commands(bot, commands: list):
