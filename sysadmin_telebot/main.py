@@ -23,7 +23,6 @@ def hello(update, context):
 
 
 def send(bot, message, chat_id):
-    print(bot, message, chat_id)
     bot.sendMessage(chat_id=chat_id, text=message)
 
 
