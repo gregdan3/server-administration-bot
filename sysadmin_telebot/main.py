@@ -27,6 +27,16 @@ def send(bot, message, chat_id):
     bot.sendMessage(chat_id=chat_id, text=message)
 
 
+def init_wrapper(bot, command: dict):
+    prefix = command.get("prefix", "")
+    execute = command["execute"]
+    suffix = command.get("suffix", "")
+    sendto = command["sendto"]
+    if execute != "":
+        stdout = get_command_out(execute)
+        send(bot, prefix + stdout + suffix, sendto)
+
+
 def main(argv):
     """ INTERNAL DOCS
         dispatcher can handle Prompts based on Context, i.e., commands beginning with / in a chat 
