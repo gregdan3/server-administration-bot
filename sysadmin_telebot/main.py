@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import argparse
 import os
-import threading
+from functools import partial
 
 from telegram.bot import Bot
 from telegram.ext import (
