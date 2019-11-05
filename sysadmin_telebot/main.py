@@ -79,8 +79,8 @@ def main(argv):
 
     all_commands = load_yml_file(argv.config)
 
-    constants = all_commands["constants"]
-    commands = all_commands["commands"]
+    constants = all_commands.get("constants", [])
+    commands = all_commands.get("commands", [])
 
     prep_constants(bot, constants)
     prep_commands(updater, commands)
