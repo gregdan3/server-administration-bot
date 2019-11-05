@@ -111,6 +111,30 @@ if __name__ == "__main__":
         default="local_config.yml",
         help="The name of the file containing the commands you want your bot to execute.",
     )
-
+    parser.add_argument(
+        "-l",
+        "--log-level",
+        dest="log_level",
+        metavar="log_level",
+        type=str.upper,
+        default="WARNING",
+        help="Logging level to stdout",
+    )
+    parser.add_argument(
+        "--log-file",
+        dest="log_file",
+        metavar="log_file",
+        type=str.upper,
+        default="errors.log",
+        help="Log file to write to",
+    )
+    parser.add_argument(
+        "--log-file-level",
+        dest="log_file_level",
+        metavar="log_file_level",
+        type=str.upper,
+        default="WARNING",
+        help="Logging level to file",
+    )
     argv = parser.parse_args()
     main(argv)
