@@ -23,6 +23,9 @@ def clean_output(stdout, stderr, handler=None):
     if stderr:
         if handler is not None:
             pass  # TODO
+        print(
+            f"Handler is None and got stderr {stderr.decode('UTF-8')}"
+        )  # TODO: logging
         return None
     return stdout.decode("UTF-8")
 
