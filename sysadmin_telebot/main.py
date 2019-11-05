@@ -42,6 +42,21 @@ def init_wrapper(bot, command: dict):
         send(bot, prefix + stdout + suffix, sendto)
 
 
+def command_wrapper(bot, command: dict):
+    seconds = command["every"]
+    prefix = command.get("prefix", "")
+    execute = command["execute"]
+    suffix = command.get("suffix", "")
+    sendto = command["sendto"]
+
+    repeat_in_thread(
+        seconds,
+        partial(
+            send_command, bot, prefix, partial(get_command_out, execute), suffix, sendto
+        ),
+    )
+
+
 def main(argv):
     """ INTERNAL DOCS
         dispatcher can handle Prompts based on Context, i.e., commands beginning with / in a chat 
