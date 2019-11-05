@@ -23,5 +23,6 @@ venv.bak/
 local*
 local/**
 error*
+ERROR*
 *token*
 *.egg-info
