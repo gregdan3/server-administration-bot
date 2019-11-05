@@ -71,11 +71,12 @@ def prep_constants(bot, constants: list):
 
 
 def main(argv):
-    """ dispatcher can handle Prompts based on Context, i.e., commands beginning with / in a chat 
-        bot can handle sending any message at any given time, and this can be threaded! """
+    init_logger(argv.log_level, argv.log_file, argv.log_file_level)
+
     token = load_token(argv.token)
-    updater = Updater(token, use_context=True)
-    bot = Bot(token)
+
+    updater = Updater(token, use_context=True)  # handles Commands
+    bot = Bot(token)  # handles Constants
 
     all_commands = load_yml_file(argv.config)
 
