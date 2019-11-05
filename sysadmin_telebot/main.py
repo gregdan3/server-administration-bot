@@ -58,25 +58,24 @@ def command_wrapper(bot, command: dict):
 
 
 def main(argv):
-    """ INTERNAL DOCS
-        dispatcher can handle Prompts based on Context, i.e., commands beginning with / in a chat 
+    """ dispatcher can handle Prompts based on Context, i.e., commands beginning with / in a chat 
         bot can handle sending any message at any given time, and this can be threaded! """
     token = load_token(argv.token)
     updater = Updater(token, use_context=True)
-
     bot = Bot(token)
+
+    commands = load_yml_file(argv.config)
+
+    init = commands.pop("init", None)
+    if init is not None and isinstance(init, dict):
+        init_wrapper(bot, init)
+
+    for key, command in commands.items():
+        command_wrapper(bot, command)
 
     updater.dispatcher.add_handler(CommandHandler("hello", hello))
 
-    user = 1
-    threading.Thread(
-        target=lambda: every(
-            3, send, bot=bot, message=get_command_out("uname -r"), chat_id=user
-        )
-    ).start()
-
     updater.start_polling()
-
     updater.idle()
 
 
