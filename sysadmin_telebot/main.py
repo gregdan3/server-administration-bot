@@ -103,9 +103,9 @@ def main(argv):
     commands = all_commands.get("commands", [])
 
     if constants == []:
-        _log.WARNING("No constants provided; none will be loaded!")
+        _log.warning("No constants provided; none will be loaded!")
     if commands == []:
-        _log.WARNING("No commands provided; none will be loaded!")
+        _log.warning("No commands provided; none will be loaded!")
 
     prep_constants(bot, constants)
     prep_commands(updater, commands)
@@ -148,7 +148,7 @@ if __name__ == "__main__":
         "--log-file",
         dest="log_file",
         metavar="log_file",
-        type=str.upper,
+        type=str,
         default="errors.log",
         help="Log file to write to",
     )
