@@ -1,12 +1,18 @@
-init:                               # init command is special, executed once at program start. Optional
-    execute: "hostname --long"      # any string command
-    prefix: ""                      # attach string to beginning of message, before command
-    suffix: ""                     # attach string to end of message, after command
-    sendto: ""                      # user or chat bot is in, by id
+constants:
+  init_example:
+    execute: ""
+    prefix: ""
+    suffix: ""
+    sendto: 1
 
-command:                            # name of command
-    every: 5                        # time in seconds
-    execute: "command arg --opt"    # any string command
-    prefix: "Example start: "       # attach string to beginning of message, before command
-    suffix: ". Finish command"     # attach string to end of message, after command
-    sendto: "12345"                 # user or chat bot is in, by id. int or str
+  repeat_example:
+    every: 60
+    execute: ""
+    prefix: ""
+    suffix: ""
+    sendto: 1
+
+commands:
+  example:
+    reactto: "sysinfo"
+    execute: "lshw"
