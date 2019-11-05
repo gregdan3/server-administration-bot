@@ -1,0 +1,9 @@
+init:
+    execute: "hostname --long"
+    prefix: "Hi! Waking up on "
+    sendto: "596485211"
+
+conntest:
+    every: 3600
+    execute: "ping -c 1 google.com"
+    sendto: "596485211"
