@@ -17,8 +17,9 @@ from sysadmin_telebot.file_utils import load_token, load_yml_file
 __all__ = []
 
 
-def hello(update, context):
-    update.message.reply_text("Hello {}".format(update.message.from_user.first_name))
+def bot_command(update, context, execute):
+    stdout = execute()
+    update.message.reply_text(f"{stdout}")
 
 
 def bot_send(bot, message, chat_id):
