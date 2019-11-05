@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 import argparse
-import os
 from functools import partial
 
 from telegram.bot import Bot
