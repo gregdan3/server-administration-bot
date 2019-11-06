@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import os
+import logging
 import yaml
 import __main__
 
@@ -7,6 +8,8 @@ import __main__
 __all__ = ["here", "load_token", "load_yml_file"]
 
 here = os.path.abspath(os.path.dirname(__main__.__file__))
+
+_log = logging.getLogger(__name__)
 
 
 def load_yml_file(filename):
