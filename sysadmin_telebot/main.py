@@ -54,6 +54,21 @@ def prep_commands(bot, commands: list):
             )
         )
 
+    _log.info("Creating help command.")
+
+    def help_command(update, context):
+        update.message.reply_text(
+            format_backticks(
+                {
+                    command["reactto"]: command["execute"]
+                    for _, command in commands.items()
+                }
+            ),
+            parse_mode=ParseMode.MARKDOWN,
+        )
+
+    bot.dispatcher.add_handler(CommandHandler("help", help_command))
+
 
 def prep_constants(bot, constants: list):
     for _, command in constants.items():
