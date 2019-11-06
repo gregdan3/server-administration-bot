@@ -21,10 +21,9 @@ def execute_command(*args, **kwargs):
 def clean_output(stdout, stderr, handler=None):
     if stderr:
         if handler is not None:
-            pass  # TODO
-        print(
-            f"Handler is None and got stderr {stderr.decode('UTF-8')}"
-        )  # TODO: logging
+            stderr = handler(stderr.decode("UTF-8"))
+            return (stdout, stderr)
+        _log.error("Handler not provided; stderr: %s", stderr.decode("UTF-8"))
         return None
     return stdout.decode("UTF-8")
 
