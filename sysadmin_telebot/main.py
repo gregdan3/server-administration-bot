@@ -29,6 +29,7 @@ def format_backticks(s):
 def bot_command(update, context, execute):
     stdout = execute()
     if not stdout:
+        update.message.reply_text("No command output.")
         return
     message = format_backticks(stdout)
     update.message.reply_text(message, parse_mode=ParseMode.MARKDOWN)
