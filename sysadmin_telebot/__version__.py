@@ -1,7 +1,7 @@
-__version__ = "0.1.0"
+__version__ = "0.3.0"
 __title__ = "Server Telegram Bot"
-__description__ = "A bot for identifying critical information about a server."  # TODO
-__url__ = ""
+__description__ = "A cool telegram bot which can be configured with any shell commands you want. Primarily for notifications and easier remove administration."
+__url__ = "https://github.com/gregdan3/server-administration-bot"
 __author__ = "Gregory Danielson"
 __author_email__ = "gregdan3@uab.edu"
-__copyright__ = ""
+__copyright__ = "Copyright Gregory Danielson, 2019. All rights reserved."
