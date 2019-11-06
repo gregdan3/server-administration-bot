@@ -69,6 +69,13 @@ def prep_commands(bot, commands: list):
 
     bot.dispatcher.add_handler(CommandHandler("help", help_command))
 
+    _log.info("Creating out-command for unknown command usages")
+
+    def unknown_command(update, context):
+        update.message.reply_text("Sorry, I didn't understand that command.")
+
+    bot.dispatcher.add_handler(MessageHandler(Filters.command, unknown_command))
+
 
 def prep_constants(bot, constants: list):
     for _, command in constants.items():
