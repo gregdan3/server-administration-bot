@@ -30,7 +30,7 @@ def clean_output(stdout, stderr, handler=None):
 
 def get_command_out(*args, **kwargs):
     stdout, stderr = execute_command(*args, **kwargs)
-    return clean_output(stdout, stderr)
+    return clean_output(stdout, stderr, **kwargs)
 
 
 def every(delay, *args, **kwargs):
