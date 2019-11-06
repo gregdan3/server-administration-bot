@@ -1,4 +1,5 @@
 #!/usr/bin/env -S python3 -OO
+import logging
 import subprocess
 import time
 import threading
@@ -7,9 +8,7 @@ import traceback
 
 __all__ = ["get_command_out", "every", "repeat_in_thread"]
 
-
-def call_command(*args, **kwargs):
-    return subprocess.call(*args)
+_log = logging.getLogger(__name__)
 
 
 def execute_command(*args, **kwargs):
