@@ -83,8 +83,8 @@ def main(argv):
 
     token = load_token(argv.token)
 
-    updater = Updater(token, use_context=True)  # handles Commands
     bot = Bot(token)  # handles Constants
+    updater = Updater(token, use_context=True)  # handles Commands
 
     all_commands = load_yml_file(argv.config)
 
