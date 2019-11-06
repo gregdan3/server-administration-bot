@@ -30,7 +30,7 @@ def bot_command(update, context, execute):
     stdout = execute()
     if not stdout:
         return
-    message = "``` " + stdout + " ```"  # TODO: gross formatting
+    message = format_backticks(stdout)
     update.message.reply_text(message, parse_mode=ParseMode.MARKDOWN)
 
 
@@ -38,7 +38,7 @@ def bot_send(bot, prefix, execute, suffix, sendto):
     stdout = execute()
     if not stdout:
         return
-    message = prefix + "``` " + stdout + " ```" + suffix  # TODO: gross formatting
+    message = prefix + format_backticks(stdout) + suffix
     bot.sendMessage(chat_id=sendto, text=message, parse_mode=ParseMode.MARKDOWN)
 
 
