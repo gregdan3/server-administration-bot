@@ -161,6 +161,7 @@ if __name__ == "__main__":
         dest="log_level",
         metavar="LEVEL",
         type=str.upper,
+        choices=["NOTSET", "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"],
         default="WARNING",
         help="Logging level to stdout",
     )
@@ -177,6 +178,7 @@ if __name__ == "__main__":
         dest="log_file_level",
         metavar="LEVEL",
         type=str.upper,
+        choices=["NOTSET", "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"],
         default="WARNING",
         help="Logging level to file",
     )
