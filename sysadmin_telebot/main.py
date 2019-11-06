@@ -99,8 +99,13 @@ def main(argv):
     prep_constants(bot, constants)
     prep_commands(updater, commands)
 
-    updater.start_polling()
-    updater.idle()
+    try:
+        _log.info("Bot is ready! Starting polling.")
+        updater.start_polling()
+        updater.idle()
+    except KeyboardInterrupt:
+        _log.info("Shutting down updater thread.")
+        updater.stop()
 
 
 if __name__ == "__main__":
