@@ -22,6 +22,10 @@ __all__ = []
 _log = logging.getLogger(__name__)
 
 
+def format_backticks(s):
+    return "``` " + str(s) + " ```"  # TODO: gross formatting
+
+
 def bot_command(update, context, execute):
     stdout = execute()
     if not stdout:
