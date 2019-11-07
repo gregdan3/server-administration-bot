@@ -4,12 +4,12 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+pytest = "*"
 
 [packages]
+sysadmin-telebot = {path = "."}
 python-telegram-bot = "*"
-e1839a8 = {editable = true,path = "."}
-server-telegram-bot = {path = "."}
-PyYAML = "*"
+pyyaml = "*"
 
 [requires]
 python_version = "3.7"
