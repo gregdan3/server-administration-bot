@@ -6,12 +6,11 @@ from setuptools import setup, find_packages, Command
 
 here = os.path.abspath(os.path.dirname(__file__))
 
-with open(os.path.join(here, "requirements.txt"), "r", encoding="utf-8") as f:
-    REQUIRED = [line.strip() for line in f.readlines()]
+REQUIRED = ["python-telegram-bot", "pyyaml"]
+
+TEST_REQUIREMENTS = ["pytest"]
 
 EXTRAS = {}
-
-TEST_REQUIREMENTS = ["pytest>=2.8.0"]
 
 # Load the package's __version__.py module as a dictionary.
 about = {}
@@ -21,8 +20,7 @@ with open(
     exec(f.read(), about)
 
 
-# Import the README and use it as the long-description.
-# Note: this will only work if 'README.md' is present in your MANIFEST.in file!
+# readme has to be in Manifest
 try:
     with io.open(os.path.join(here, "README.md"), encoding="utf-8") as f:
         long_description = "\n" + f.read()
@@ -41,18 +39,11 @@ setup(
     python_requires=">=3.6.6",
     url=about["__url__"],
     packages=find_packages(exclude=["tests", "*.tests", "*.tests.*", "tests.*"]),
-    # If your package is a single module, use this instead of 'packages':
-    # py_modules=['mypackage'],
-    # entry_points={
-    #     'console_scripts': ['mycli=mymodule:cli'],
-    # },
     install_requires=REQUIRED,
     extras_require=EXTRAS,
     tests_require=TEST_REQUIREMENTS,
     include_package_data=True,
     classifiers=[
-        # Trove classifiers
-        # Full list: https://pypi.python.org/pypi?%3Aaction=list_classifiers
         "Intended Audience :: Developers",
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",
