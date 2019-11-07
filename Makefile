@@ -1,0 +1,3 @@
+main:
+	pipenv install
+
