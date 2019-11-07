@@ -10,18 +10,18 @@ Now I can check on the server's status very quickly just by having this bot runn
 
 ### How to set up
 1. `cp ./sysadmin_telebot/COMMAND_TEMPLATE.yml ./sysadmin_telebot/local_config.yml`
-  - Can also be any other name, so long as the formatting remains the same. Specify custom files with the `-c` argument.
+    - Can also be any other name, so long as the formatting remains the same. Specify custom files with the `-c` argument.
 
 2. In the format provided, add any shell commands into the `constants` section that you want to run on init or repeatedly on an interval.
-  - every (int): How frequently, in seconds, to repeat the given command. If not provided, command is run at bot init and never again. Optional
-  - prefix (str): Prepended to execute output. Optional
-  - execute (str): Shell command that the bot will execute and send the result of to the user or chat specified in sendto. Required
-  - suffix (str): appended to execute output. Optional
-  - sendto (str, int): id of a user or chat to send the message to. Required
+    - every (int): How frequently, in seconds, to repeat the given command. If not provided, command is run at bot init and never again. Optional
+    - prefix (str): Prepended to execute output. Optional
+    - execute (str): Shell command that the bot will execute and send the result of to the user or chat specified in sendto. Required
+    - suffix (str): appended to execute output. Optional
+    - sendto (str, int): id of a user or chat to send the message to. Required
 
 3. In the format provided, add any shell commands that you want users to be able to trigger into the `commands` section.
-  - reactto (str): Name of command that the bot will react to in telegram. /reactto. Required
-  - execute (str): Shell command that the bot will execute and send the result of to the user who triggered the command. Required
+    - reactto (str): Name of command that the bot will react to in telegram. /reactto. Required
+    - execute (str): Shell command that the bot will execute and send the result of to the user who triggered the command. Required
 
 ### How to run
 1. `pipenv install && pipenv shell`
@@ -44,8 +44,8 @@ If you stop the bot in the middle of a command execution, the process that was b
 
 ### Future additions
 * Create a "danger mode" option, which allows the user to execute any command via messaging the bot on telegram.
-  - Activated via argv when starting the program
-  - Triggers a blocking warning before the bot initializes, preventing the bot from starting until the user confirms their choice.
+    - Activated via argv when starting the program
+    - Triggers a blocking warning before the bot initializes, preventing the bot from starting until the user confirms their choice.
 
 * Add extensive debug logging
 
