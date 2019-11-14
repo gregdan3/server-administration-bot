@@ -10,6 +10,3 @@ pytest = "*"
 sysadmin-telebot = {path = "."}
 python-telegram-bot = "*"
 pyyaml = "*"
-
-[requires]
-python_version = "3.7"
