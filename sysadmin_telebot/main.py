@@ -2,6 +2,7 @@
 import argparse
 from functools import partial
 import logging
+import sys
 
 from telegram import ParseMode
 from telegram.bot import Bot
@@ -147,4 +148,15 @@ def main(argv):
 if __name__ == "__main__":
     parser = BaseArgParser()
     argv = parser.parse_args()
+    if argv.danger_mode:
+        _log.warning(
+            "YOU ARE STARTING THE BOT IN DANGER MODE! Are you SURE you want to continue?"
+        )
+        _log.warning(
+            "Users with access to the bot will be able to execute arbitrary commands on your system!"
+        )
+        if input("Y/N: ").lower() not in {"y", "yes"}:
+            _log.warning("Prompt not accepted. Shutting down.")
+            sys.exit()
+
     main(argv)
