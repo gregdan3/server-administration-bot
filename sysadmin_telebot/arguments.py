@@ -28,6 +28,15 @@ def BaseArgParser():
         help="The name of the file containing the commands you want your bot to execute.",
     )
     parser.add_argument(
+        "--danger-mode",
+        dest="danger_mode",
+        metavar="DANGER_MODE",
+        type=bool,
+        default=False,
+        action="store_true",
+        help="Enable Danger Mode, where the bot can execute arbitrary commands provided by the user.",
+    )
+    parser.add_argument(
         "-l",
         "--log-level",
         dest="log_level",
