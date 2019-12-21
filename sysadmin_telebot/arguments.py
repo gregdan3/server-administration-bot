@@ -30,9 +30,8 @@ def BaseArgParser():
     parser.add_argument(
         "--danger-mode",
         dest="danger_mode",
-        metavar="DANGER_MODE",
-        type=bool,
-        default=False,
+        # metavar does not apply here
+        # type, default args are redundant
         action="store_true",
         help="Enable Danger Mode, where the bot can execute arbitrary commands provided by the user.",
     )
