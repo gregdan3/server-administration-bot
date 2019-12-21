@@ -47,8 +47,6 @@ If you stop the bot in the middle of a command execution, the process that was b
     - Activated via argv when starting the program
     - Triggers a blocking warning before the bot initializes, preventing the bot from starting until the user confirms their choice.
 
-* Allow init and repeated scripts to be sent to more than one user
-
 * Allow importing bash scripts instead of writing directly into config
 
 * Add extensive debug logging
