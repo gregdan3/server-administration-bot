@@ -86,23 +86,11 @@ def prep_constants(bot, constants: list):
         suffix = command.get("suffix", "")
         sendto = command["sendto"]
 
-        if seconds == "":  # init constants to run immediately
-            _log.info("Executing %s, sending to %s", execute, sendto)
-            bot_send(bot, prefix, partial(get_command_out, execute), suffix, sendto)
-
-        else:  # constants to run regularly
-            _log.info("Executing %s every %s, sending to %s", execute, seconds, sendto)
-            repeat_in_thread(
-                seconds,
-                partial(
-                    bot_send,
-                    bot,
-                    prefix,
-                    partial(get_command_out, execute),
-                    suffix,
-                    sendto,
-                ),
-            )
+        if isinstance(sendto, list):
+            for receiver in sendto:
+                run_constant_in_thread(bot, seconds, prefix, execute, suffix, receiver)
+        else:
+            run_constant_in_thread(bot, seconds, prefix, execute, suffix, sendto)
 
 
 def run_constant_in_thread(bot, seconds, prefix, execute, suffix, sendto):
