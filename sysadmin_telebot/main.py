@@ -16,6 +16,7 @@ from telegram.ext import (
 from sysadmin_telebot.process_utils import get_command_out, repeat_in_thread
 from sysadmin_telebot.file_utils import load_token, load_yml_file
 from sysadmin_telebot.log_utils import init_logger
+from sysadmin_telebot.arguments import BaseArgParser
 
 __all__ = []
 
@@ -144,52 +145,6 @@ def main(argv):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-
-    parser.add_argument(
-        "-t",
-        "--token",
-        dest="token",
-        metavar="TOKEN_FILE",
-        type=str,
-        default="token.txt",
-        help="The name of the file containing your bot's token.",
-    )
-    parser.add_argument(
-        "-c",
-        "--config",
-        dest="config",
-        metavar="CONFIG_FILE",
-        type=str,
-        default="local_config.yml",
-        help="The name of the file containing the commands you want your bot to execute.",
-    )
-    parser.add_argument(
-        "-l",
-        "--log-level",
-        dest="log_level",
-        metavar="LEVEL",
-        type=str.upper,
-        choices=["NOTSET", "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"],
-        default="WARNING",
-        help="Logging level to stdout",
-    )
-    parser.add_argument(
-        "--log-file",
-        dest="log_file",
-        metavar="LOG_FILE",
-        type=str,
-        default="errors.log",
-        help="Log file to write to",
-    )
-    parser.add_argument(
-        "--log-file-level",
-        dest="log_file_level",
-        metavar="LEVEL",
-        type=str.upper,
-        choices=["NOTSET", "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"],
-        default="WARNING",
-        help="Logging level to file",
-    )
+    parser = BaseArgParser()
     argv = parser.parse_args()
     main(argv)
