@@ -30,6 +30,10 @@ Now I can check on the server's status very quickly just by having this bot runn
 
 Preferably, execute the bot inside of a screen or tmux session so that it can be hidden and re-captured by the executing user.
 
+### Convenient testing tool
+You can go to `https://api.telegram.org/botYOUR_BOT_TOKEN/getUpdates` to see all the recent messages your bot has sent and received, as well as group additions/removals and other interactions. This way,
+if you lose access to your bot for some reason, you can still see what it's been doing, if it's still running.
+
 
 ### Important notes
 It is up to the person setting up the bot to create and use responsible commands. You can cause damage via the bot if you add dangerous commands to the bot's config.
@@ -57,6 +61,4 @@ If you stop the bot in the middle of a command execution, the process that was b
 
 ### ETC.
 
-Author: Gregory Danielson (@gregdan3)
-
-Last updated: 11/06/2019
+authors: Gregory Danielson (@gregdan3)
