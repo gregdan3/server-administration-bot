@@ -55,6 +55,15 @@ If you stop the bot in the middle of a command execution, the process that was b
 
 * Add extensive debug logging
 
+* Allow scripts running on a time interval to "timeout" once they occur
+    - For example: `dmesg | grep segfault` will only send a message if there is content in the command...
+    - But you might not want to see the same message on every repeat, once you see it the first time!
+    - So `timeout` will delay that command from executing again for a set period of time, likely by sleeping that thread.
+
+* Allow scripts running on a time interval to execute at a specific time, as opposed
+  to on a given interval set by bot start
+  - If this could be cron-like, that would be awesome
+
 
 
 -----
