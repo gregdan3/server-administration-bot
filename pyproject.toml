@@ -1,0 +1,25 @@
+[project]
+name = "sysadmin_telebot"
+version = "0.1.0"
+description = "A Telegram bot for managing a server remotely"
+authors = [
+    {name = "Gregory Danielson", email = "gregdan3@protonmail.com"},
+]
+dependencies = [
+    "python-telegram-bot~=13.8",
+    "python-dotenv~=0.19",
+    "pyyaml~=6.0",
+]
+requires-python = ">=3.9"
+dynamic = ["classifiers"]
+license = {text = "GPL-3.0-or-later"}
+
+[project.urls]
+homepage = ""
+
+[build-system]
+requires = ["pdm-pep517"]
+build-backend = "pdm.pep517.api"
+
+[tool]
+[tool.pdm]

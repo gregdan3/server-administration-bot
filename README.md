@@ -24,9 +24,8 @@ Now I can check on the server's status very quickly just by having this bot runn
     - execute (str): Shell command that the bot will execute and send the result of to the user who triggered the command. Required
 
 ### How to run
-1. `pipenv install && pipenv shell`
-2. `cd sysadmin_telebot`
-3. `python3 ./main.py`
+1. `pdm install`
+2. `pdm run python ./sysadmin-telebot/main.py`
 
 Preferably, execute the bot inside of a screen or tmux session so that it can be hidden and re-captured by the executing user.
 
@@ -65,9 +64,42 @@ If you stop the bot in the middle of a command execution, the process that was b
   - If this could be cron-like, that would be awesome
 
 
+### Annotated Config
+TODO
 
------
+```yml
+constants:  # All commands which are run at init or on specified intervals, without user input, REQUIRED KEY
+  init:  # no every argument means to execute once at beginning of runtime
+    execute: "hostname --long"  # execute will be run as a shell command, and the output returned
+    prefix: "Hi! Waking up on host "  # will be attached before command output
+    suffix: "\nHave a nice day!"  # will be attached after command output
+    sendto: "1"  # a user or chat to send to, which the bot has permissions for
 
-### ETC.
+  another:  # you can have more than one of these
+    execute: "ls -la"  # can be any shell command, including piped programs.
+    prefix: "Current dir files: \n"  # any special character is legal, probably?
+    sendto: "1"
 
-authors: Gregory Danielson (@gregdan3)
+  conntest:  # the names of keys are irrelevant
+    every: 60  # measured in seconds
+    execute: "ping -c 1 google.com"  # if a given command takes a long time, outside the interval,
+    sendto: "1"  # it will only re-execute once instead of queueing many executions
+
+  sysdata:  # key names can be used for your own purposes
+    every: 40  #
+    execute: "uname -r"
+    sendto: "1"
+
+commands:  # all commands which can be triggered by users by the `reactto` command name, REQUIRED KEY
+  info:  # keynames here are still irrelevant
+    reactto: "sysinfo"  # reactto means the name of the command that must be executed to get the result
+    execute: "lshw"  # same as execute above, shell command to execute
+
+  blocks:
+    reactto: "blocks"
+    execute: "lsblk"
+
+  cpu:
+    reactto: "processor"
+    execute: "lscpu"
+```

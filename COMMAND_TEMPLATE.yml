@@ -7,6 +7,7 @@ constants:
 
   repeat_example:
     every: 60
+    sleep: ""
     execute: ""
     prefix: ""
     suffix: ""

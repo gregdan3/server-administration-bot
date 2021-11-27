@@ -27,3 +27,7 @@ error*
 ERROR*
 *token*
 *.egg-info
+
+# pdm
+.pdm.toml
+__pypackages__
