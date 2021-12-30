@@ -1,10 +1,8 @@
-install:
-	pipenv install
+init:
+	pdm install --prod
 
-develop:
-	pipenv install --dev
-	pipenv shell
+init-dev:
+	pdm install
 
-test: 
-	pipenv install --dev
-	pipenv run python -m pytest
+test:
+	pdm run python ./sysadmin_telebot/main.py --log-level debug

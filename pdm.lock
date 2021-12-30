@@ -95,7 +95,7 @@ dependencies = [
 
 [metadata]
 lock_version = "3.1"
-content_hash = "sha256:c04fa223063c7a4e71985763a7912fe46d643fa9a7dae2bfa4f954a730726a16"
+content_hash = "sha256:3d6b28d874e9f2724b06746294a5fd8da961c42b497a5420e5b99119722eb46c"
 
 [metadata.files]
 "apscheduler 3.6.3" = [
