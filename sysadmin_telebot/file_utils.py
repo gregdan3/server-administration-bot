@@ -1,32 +1,20 @@
-#!/usr/bin/env -S python3 -OO
-import os
 import logging
+import os
+
 import yaml
-import __main__
+from dotenv import load_dotenv
 
-
-__all__ = ["here", "load_token", "load_yml_file"]
-
-here = os.path.abspath(os.path.dirname(__main__.__file__))
-
+__all__ = ["load_yml_file", "TG_BOT_KEY"]
 _log = logging.getLogger(__name__)
+
+load_dotenv()
+TG_BOT_KEY = os.environ.get("TG_BOT_KEY")
+if not TG_BOT_KEY:
+    _log.critical("No telegram bot key provided! Shutting down...")
+    exit(1)
 
 
 def load_yml_file(filename):
     with open(filename, "r") as f:
         command = yaml.full_load(f)
     return command
-
-
-def load_token(token_name):
-    with open(os.path.join(here, token_name)) as f:
-        token = f.readline().strip()
-    return token
-
-
-def main():
-    print(load_yml_file(os.path.join(here, "local_config.yml")))
-
-
-if __name__ == "__main__":
-    main()

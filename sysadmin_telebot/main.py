@@ -15,7 +15,7 @@ from telegram.ext import (
 )
 
 from sysadmin_telebot.process_utils import get_command_out, repeat_in_thread
-from sysadmin_telebot.file_utils import load_token, load_yml_file
+from sysadmin_telebot.file_utils import TG_BOT_KEY, load_yml_file
 from sysadmin_telebot.log_utils import init_logger
 from sysadmin_telebot.arguments import BaseArgParser
 
@@ -118,10 +118,8 @@ def run_constant_in_thread(bot, seconds, prefix, execute, suffix, sendto):
 def main(argv):
     init_logger(argv.log_level, argv.log_file, argv.log_file_level)
 
-    token = load_token(argv.token)
-
-    bot = Bot(token)  # handles Constants
-    updater = Updater(token, use_context=True)  # handles Commands
+    bot = Bot(TG_BOT_KEY)  # handles Constants
+    updater = Updater(TG_BOT_KEY, use_context=True)  # handles Commands
 
     all_commands = load_yml_file(argv.config)
 

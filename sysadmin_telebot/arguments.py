@@ -1,23 +1,11 @@
-#!/usr/bin/env python3
-
 import argparse
 
 
 def BaseArgParser():
-    """ Provides an argparse.ArgumentParser with some arguments pre-prepared.
-        The object is provided, as opposed to the already parsed args, so that
-        another user/script may configure the parser even further if necessary. """
+    """Provides an argparse.ArgumentParser with some arguments pre-prepared.
+    The object is provided, as opposed to the already parsed args, so that
+    another user/script may configure the parser even further if necessary."""
     parser = argparse.ArgumentParser()
-
-    parser.add_argument(
-        "-t",
-        "--token",
-        dest="token",
-        metavar="TOKEN_FILE",
-        type=str,
-        default="token.txt",
-        help="The name of the file containing your bot's token.",
-    )
     parser.add_argument(
         "-c",
         "--config",
@@ -25,15 +13,14 @@ def BaseArgParser():
         metavar="CONFIG_FILE",
         type=str,
         default="local_config.yml",
-        help="The name of the file containing the commands you want your bot to execute.",
+        help="Location of config file for all bot commands.",
     )
     parser.add_argument(
         "--danger-mode",
         dest="danger_mode",
-        # metavar does not apply here
-        # type, default args are redundant
+        default=False,
         action="store_true",
-        help="Enable Danger Mode, where the bot can execute arbitrary commands provided by the user.",
+        help="Enable Danger Mode: bot can execute arbitrary commands.",
     )
     parser.add_argument(
         "-l",
@@ -63,17 +50,3 @@ def BaseArgParser():
         help="Logging level to file",
     )
     return parser  # allow user to configure later
-
-
-def main():
-    parser = BaseArgParser()
-    argv = parser.parse_args()
-    print("argv.token:          %s" % argv.token)
-    print("argv.config:         %s" % argv.config)
-    print("argv.log_level:      %s" % argv.log_level)
-    print("argv.log_file:       %s" % argv.log_file)
-    print("argv.log_file_level: %s" % argv.log_file_level)
-
-
-if __name__ == "__main__":
-    main()
