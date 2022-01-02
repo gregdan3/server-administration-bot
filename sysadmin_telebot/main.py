@@ -1,51 +1,29 @@
-#!/usr/bin/env -S python3 -OO
-import argparse
-from functools import partial
+#!/usr/bin/env python3
 import logging
 import sys
+from functools import partial
 
-from telegram import ParseMode
 from telegram.bot import Bot
-from telegram.ext import (
-    Updater,
-    CommandHandler,
-    MessageHandler,
-    Filters,
-    InlineQueryHandler,
-)
+from telegram.ext import CommandHandler, Filters, MessageHandler, Updater
 
-from sysadmin_telebot.process_utils import get_command_out, repeat_in_thread
+from sysadmin_telebot.arguments import BaseArgParser
 from sysadmin_telebot.file_utils import TG_BOT_KEY, load_yml_file
 from sysadmin_telebot.log_utils import init_logger
-from sysadmin_telebot.arguments import BaseArgParser
+from sysadmin_telebot.process_utils import get_command_out
+from sysadmin_telebot.telegram_utils import (
+    bot_command,
+    handle_message_queue,
+    help_command,
+    thread_command,
+    unknown_command,
+)
+from sysadmin_telebot.thread_utils import create_message_thread, repeat_in_thread
 
 __all__ = []
-
 _log = logging.getLogger(__name__)
 
 
-def format_backticks(s):
-    return "``` " + str(s) + " ```"  # TODO: gross formatting
-
-
-def bot_command(update, context, execute):
-    stdout = execute()
-    if not stdout:
-        update.message.reply_text("No command output.")
-        return
-    message = format_backticks(stdout)
-    update.message.reply_text(message, parse_mode=ParseMode.MARKDOWN)
-
-
-def bot_send(bot, prefix, execute, suffix, sendto):
-    stdout = execute()
-    if not stdout:
-        return
-    message = prefix + format_backticks(stdout) + suffix
-    bot.sendMessage(chat_id=sendto, text=message, parse_mode=ParseMode.MARKDOWN)
-
-
-def prep_commands(bot, commands: list):
+def prep_commands(bot, commands: dict):
     for _, command in commands.items():
         reactto = command["reactto"]
         execute = command["execute"]
@@ -58,61 +36,40 @@ def prep_commands(bot, commands: list):
         )
 
     _log.info("Creating help command.")
-
-    def help_command(update, context):
-        update.message.reply_text(
-            format_backticks(
-                {
-                    command["reactto"]: command["execute"]
-                    for _, command in commands.items()
-                }
-            ),
-            parse_mode=ParseMode.MARKDOWN,
-        )
-
-    bot.dispatcher.add_handler(CommandHandler("help", help_command))
+    bot.dispatcher.add_handler(
+        CommandHandler("help", partial(help_command, commands=commands))
+    )
 
     _log.info("Creating out-command for unknown command usages")
-
-    def unknown_command(update, context):
-        update.message.reply_text("Sorry, I didn't understand that command.")
-
     bot.dispatcher.add_handler(MessageHandler(Filters.command, unknown_command))
 
 
-def prep_constants(bot, constants: list):
+def prep_constants(constants: dict):
     for _, command in constants.items():
-        seconds = command.get("every", "")
+        seconds = command.get("every", 0)
+        sleep = command.get("sleep", 0)
         prefix = command.get("prefix", "")
         execute = command["execute"]
         suffix = command.get("suffix", "")
         sendto = command["sendto"]
 
-        if isinstance(sendto, list):
-            for receiver in sendto:
-                run_constant_in_thread(bot, seconds, prefix, execute, suffix, receiver)
-        else:
-            run_constant_in_thread(bot, seconds, prefix, execute, suffix, sendto)
+        if seconds == 0:  # init constants to run immediately
+            _log.info("Executing %s, sending to %s", execute, sendto)
+            thread_command(prefix, partial(get_command_out, execute), suffix, sendto)
 
-
-def run_constant_in_thread(bot, seconds, prefix, execute, suffix, sendto):
-    if seconds == "":  # init constants to run immediately
-        _log.info("Executing %s, sending to %s", execute, sendto)
-        bot_send(bot, prefix, partial(get_command_out, execute), suffix, sendto)
-
-    else:  # constants to run regularly
-        _log.info("Executing %s every %s, sending to %s", execute, seconds, sendto)
-        repeat_in_thread(
-            seconds,
-            partial(
-                bot_send,
-                bot,
-                prefix,
-                partial(get_command_out, execute),
-                suffix,
-                sendto,
-            ),
-        )
+        else:  # constants to run regularly
+            _log.info("Executing %s every %s, sending to %s", execute, seconds, sendto)
+            repeat_in_thread(
+                seconds,
+                partial(
+                    thread_command,
+                    prefix,
+                    partial(get_command_out, execute),
+                    suffix,
+                    sendto,
+                    sleep,
+                ),
+            )
 
 
 def main(argv):
@@ -121,17 +78,21 @@ def main(argv):
     bot = Bot(TG_BOT_KEY)  # handles Constants
     updater = Updater(TG_BOT_KEY, use_context=True)  # handles Commands
 
+    create_message_thread(handle_message_queue, bot)
+    # every message from a thread instead goes to a Queue
+    # and a single thread reads from that queue
+
     all_commands = load_yml_file(argv.config)
 
-    constants = all_commands.get("constants", [])
-    commands = all_commands.get("commands", [])
+    constants = all_commands.get("constants", {})
+    commands = all_commands.get("commands", {})
 
-    if constants == []:
+    if not constants:
         _log.warning("No constants provided; none will be loaded!")
-    if commands == []:
+    if not commands:
         _log.warning("No commands provided; none will be loaded!")
 
-    prep_constants(bot, constants)
+    prep_constants(constants)
     prep_commands(updater, commands)
 
     try:
