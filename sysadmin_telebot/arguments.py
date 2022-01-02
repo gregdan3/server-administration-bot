@@ -30,15 +30,15 @@ def BaseArgParser():
         type=str.upper,
         choices=["NOTSET", "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"],
         default="WARNING",
-        help="Logging level to stdout",
+        help="Logging level to stdout.",
     )
     parser.add_argument(
         "--log-file",
         dest="log_file",
         metavar="LOG_FILE",
         type=str,
-        default="errors.log",
-        help="Log file to write to",
+        default="",
+        help="Log file to write to. No file logging by default.",
     )
     parser.add_argument(
         "--log-file-level",
@@ -47,6 +47,6 @@ def BaseArgParser():
         type=str.upper,
         choices=["NOTSET", "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"],
         default="WARNING",
-        help="Logging level to file",
+        help="Logging level to file.",
     )
     return parser  # allow user to configure later
