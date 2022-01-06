@@ -1,17 +1,22 @@
+---
+owner: ""
+
 constants:
   init_example:
     execute: ""
     prefix: ""
     suffix: ""
-    sendto: 1
+    sendto:
+      - ""
 
   repeat_example:
-    every: 60
-    sleep: ""
+    every: 5
     execute: ""
     prefix: ""
     suffix: ""
-    sendto: 1
+    sendto:
+      - ""
+    sleep: 0
 
 commands:
   example:
